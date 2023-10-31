@@ -120,9 +120,9 @@ def delete_stand():
 def update():
     searchname = input("What driver's standings do you want to Update?: ")
 
-    standind_collumn = input("What standing do you want to Update?: ")
+    standing_collumn = input("What standing do you want to Update?: ")
 
-    if standind_collumn == 'Points':
+    if standing_collumn == 'Points':
         MAX_POINTS_data = sql_client.fetch_all(
             "SELECT DISTINCT Points FROM standings WHERE `Points` = (SELECT MAX(`Points`) FROM standings);")
         if MAX_POINTS_data:
@@ -135,7 +135,9 @@ def update():
         BHND = Points - MAX_POINTS
 
         sql_client.delete_all(f"UPDATE standings SET Points = {Points}, BHND = {BHND} WHERE Driver = '{searchname}';")
+        print(f'{standing_collumn},BHND of {searchname} is now Updated to {Points} and {BHND}')
     else:
         value = input("What is the new value?: ")
-        # sql_client.delete_all(f"UPDATE standings SET Points = {Points}, BHND = {BHND} WHERE Driver = {searchname};")
+        sql_client.delete_all(f"UPDATE standings SET `{standing_collumn}` = {value} WHERE Driver = '{searchname}';")
+        print(f'{standing_collumn} of {searchname} is now Updated to {value}')
 

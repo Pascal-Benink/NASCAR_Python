@@ -75,6 +75,7 @@ def display_help():
     print("to get the current standings with the chosen manufacturer /standings_manufacturer ")
     print("Add a competitor to the database /add_comp ")
     print("Delete a competitor from the database /delete_standing ")
+    print("Update a competitor from the database /update_standing ")
 def exit_program():
     print("Program Offline")
     sys.exit()
