@@ -40,6 +40,3 @@ class SQLClient:
         q = f"INSERT INTO {table} ({key_str}) VALUES ({val_str})"
         self.cursor.execute(q, values)  # Use the `values` tuple here
         self.db.commit()
-
-    def get_uninstalled_imeis(self):
-        pass
