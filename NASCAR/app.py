@@ -38,6 +38,7 @@ def display_help():
     print("Add a competitor to the database /add_comp ")
     print("Delete a competitor from the database /delete_standing ")
     print("Update a competitor from the database /update_standing ")
+    print("to use multiple commands at a time type ; between the commands like /add_comp; /delete_standing")
 
 def exit_program():
     print("Program Offline")
