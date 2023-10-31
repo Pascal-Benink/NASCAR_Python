@@ -164,3 +164,13 @@ def check_name():
             print('\033[92m Problem solved \033[0m')
         else:
             print(f" \033[92m No changes: {driver_name} \033[0m")
+
+
+def insert_tester():
+    amount = 0
+    while amount <= 10:
+        amount += 1
+        sql_client.query_fix("INSERT INTO standings (Driver) VALUES (NULl)")
+        print(f"fake null {amount} made!")
+
+print("Generating complete")
