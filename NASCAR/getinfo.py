@@ -1,5 +1,7 @@
 from sql_client import SQLClient
+
 sql_client = SQLClient()
+
 
 def get_info():
     current_standings = sql_client.fetch_all("SELECT `Rank`, Driver, `Car #`, Points FROM standings;")
@@ -10,30 +12,36 @@ def get_info():
     for data in current_standings:
         print(data)
 
+
 def get_info_from_name(name):
     name = str(name)
-    current_standings = sql_client.fetch_all("SELECT `Rank`, Driver, `Car #`, Points FROM standings WHERE Driver = '" + name + "'';")
+    current_standings = sql_client.fetch_all(
+        "SELECT `Rank`, Driver, `Car #`, Points FROM standings WHERE Driver = '" + name + "'';")
 
     current_standings_str = str(current_standings)
 
     print("The current NASCAR Cup Standings are: ")
     for data in current_standings:
         print(data)
+
 
 def get_info_best():
-    current_standings = sql_client.fetch_all("SELECT `Rank`, Driver, `Car #`, Points FROM standings WHERE `Points` = (SELECT MAX(`Points`) FROM standings);")
+    current_standings = sql_client.fetch_all(
+        "SELECT `Rank`, Driver, `Car #`, Points FROM standings WHERE `Points` = (SELECT MAX(`Points`) FROM standings);")
 
     current_standings_str = str(current_standings)
 
     print("The current NASCAR Cup Standings are: ")
     for data in current_standings:
         print(data)
+
 
 def get_info_driver_manufacturer():
     manu = str(sql_client.fetch_all("SELECT DISTINCT Make FROM standings"))
     print('The Manufacturers are' + manu)
     name = str(input("Input Manufacturer name here: "))
-    current_standings = sql_client.fetch_all("SELECT `Rank`, Driver, `Car #`, Points FROM standings WHERE Make = '" + name + "';")
+    current_standings = sql_client.fetch_all(
+        "SELECT `Rank`, Driver, `Car #`, Points FROM standings WHERE Make = '" + name + "';")
 
     current_standings_str = str(current_standings)
 
@@ -41,8 +49,10 @@ def get_info_driver_manufacturer():
     for data in current_standings:
         print(data)
 
+
 def add_competitor():
-    MAX_POINTS_data = sql_client.fetch_all("SELECT DISTINCT Points FROM standings WHERE `Points` = (SELECT MAX(`Points`) FROM standings);")
+    MAX_POINTS_data = sql_client.fetch_all(
+        "SELECT DISTINCT Points FROM standings WHERE `Points` = (SELECT MAX(`Points`) FROM standings);")
     if MAX_POINTS_data:
         MAX_POINTS = MAX_POINTS_data[0].get('Points', 0)
     else:
@@ -80,8 +90,9 @@ def add_competitor():
         # INSERT INTO standings (`Rank`, `Rank +/-`, `STS`, `Driver`, `Car #`, `Make`, `Points`, `BHND`, `PO PTS`, `P`, `Win`, `T5`, `T10`, `STG Win`)
         # VALUES (110, NULL, 15, 'Sample Driver', 42, 'Sample Make', 500, 50, 10, 2, 3, 8, 12, 4);
         keys = (
-        "`Rank`", "`Rank +/-`", "`STS`", "`Driver`", "`Car #`", "`Make`", "`Points`", "`BHND`", "`PO PTS`", "`P`", "`Win`", "`T5`", "`T10`",
-        "`STG Win`")
+            "`Rank`", "`Rank +/-`", "`STS`", "`Driver`", "`Car #`", "`Make`", "`Points`", "`BHND`", "`PO PTS`", "`P`",
+            "`Win`", "`T5`", "`T10`",
+            "`STG Win`")
         values = (Rank, None, STS, Driver, Car, Make, Points, BHND, PO_PTS, P, Win, T5, T10, STG_Win)
         table = "standings"
 
@@ -117,6 +128,7 @@ def delete_stand():
     else:
         print("Invalid input")
 
+
 def update():
     searchname = input("What driver's standings do you want to Update?: ")
 
@@ -141,3 +153,14 @@ def update():
         sql_client.delete_all(f"UPDATE standings SET `{standing_collumn}` = {value} WHERE Driver = '{searchname}';")
         print(f'{standing_collumn} of {searchname} is now Updated to {value}')
 
+
+def check_name():
+    standings = sql_client.fetch_all('SELECT Driver FROM standings')
+    for data in standings:
+        driver_name = data.get('Driver', '')  # Get the Driver value from the result
+        if driver_name is None or driver_name == '':
+            print(f' \033[91m ERR1 NULL/EMPTY PROBLEM: {driver_name} \033[0m')
+            sql_client.delete_all("DELETE FROM standings WHERE Driver IS NULL OR Driver = ''")
+            print('\033[92m Problem solved \033[0m')
+        else:
+            print(f" \033[92m No changes: {driver_name} \033[0m")

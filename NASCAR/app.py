@@ -30,6 +30,9 @@ def add_comp():
 def update_standing():
     update()
 
+def name_check():
+    check_name()
+
 def display_help():
     print("to get the current standings Use the command /standings ")
     print("to get the current standings filtered by name Use the command /standings_name ")
@@ -52,6 +55,7 @@ commands_dict = {
     "/delete_standing": delete,
     "/add_comp": add_comp,
     "/update_standing": update_standing,
+    "/name_check": name_check,
     "/help": display_help,
     "/?": display_help,
     "/exit": exit_program
