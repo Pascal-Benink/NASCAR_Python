@@ -52,6 +52,9 @@ restart = "N"
 def restart_program():
     python = sys.executable
     os.execl(python, python, *sys.argv)
+
+def delete():
+    delete_stand()
 def get_standings():
     get_info()
 def get_standings_name():
@@ -77,6 +80,7 @@ commands_dict = {
     "/standings_name": get_standings_name,
     "/standings_best": get_standings_best,
     "/standings_manufacturer": get_standings_manufacturer,
+    "/delete_standing": delete,
     "/add_comp": add_comp,
     "/help": display_help,
     "/?": display_help,

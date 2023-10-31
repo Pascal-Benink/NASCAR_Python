@@ -90,3 +90,25 @@ def add_competitor():
         print('Competitor standing add Canceled')
     else:
         print('invalid Input')
+
+def delete_stand():
+
+    searchname = str(input("What driver his standings do you want to delete?: "))
+
+    current = str(sql_client.fetch_all(
+        "SELECT * FROM standings WHERE Driver = '" + searchname + "';"))
+
+
+    thechoice = str(input("Are you sure you want to delete \n" + current + " \ny/n:"))
+    if thechoice == "y":
+        current_standings = str(sql_client.fetch_all(
+            "DELETE FROM standings WHERE Driver = '" + searchname + "';"))
+    elif thechoice == "n":
+        print("Deleting cancelled")
+    else:
+        print("invalid input")
+
+
+
+
+
