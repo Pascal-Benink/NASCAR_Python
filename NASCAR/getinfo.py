@@ -91,24 +91,29 @@ def add_competitor():
     else:
         print('invalid Input')
 
+
 def delete_stand():
+    searchname = input("What driver's standings do you want to delete?: ")
 
-    searchname = str(input("What driver his standings do you want to delete?: "))
+    # Check if the record exists
+    existing_record = sql_client.fetch_all(
+        "SELECT * FROM standings WHERE Driver = '" + searchname + "';")
 
-    current = str(sql_client.fetch_all(
-        "SELECT * FROM standings WHERE Driver = '" + searchname + "';"))
+    if not existing_record:
+        print("No record found for the specified driver.")
+        return  # Exit the function
 
+    current = str(existing_record)
 
     thechoice = str(input("Are you sure you want to delete \n" + current + " \ny/n:"))
+
     if thechoice == "y":
-        current_standings = str(sql_client.fetch_all(
-            "DELETE FROM standings WHERE Driver = '" + searchname + "';"))
+        sql_client.delete_all("DELETE FROM standings WHERE Driver = '" + searchname + "';")
+        print("Record deleted successfully.")
     elif thechoice == "n":
-        print("Deleting cancelled")
+        print("Deletion canceled.")
     else:
-        print("invalid input")
-
-
+        print("Invalid input")
 
 
 

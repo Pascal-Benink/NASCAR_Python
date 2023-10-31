@@ -29,6 +29,10 @@ class SQLClient:
         self.cursor.execute(query, params)
         return self.cursor.fetchall()
 
+    def delete_all(self, query: str, params=None) -> dict:
+        self.cursor.execute(query, params)
+
+
     def insert(self, keys: tuple, values: tuple, table: str):
         key_str = ", ".join(keys)
         val_str = ", ".join(["%s"] * len(keys))
