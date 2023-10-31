@@ -172,3 +172,5 @@ def insert_tester():
         amount += 1
         sql_client.query_fix("INSERT INTO standings (Driver) VALUES (NULl)")
         print(f"fake null {amount} made!")
+
+print("Generating complete")

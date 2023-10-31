@@ -33,6 +33,9 @@ def update_standing():
 def name_check():
     check_name()
 
+def faker_null():
+    insert_tester()
+
 def display_help():
     print("to get the current standings Use the command /standings ")
     print("to get the current standings filtered by name Use the command /standings_name ")
@@ -58,7 +61,8 @@ commands_dict = {
     "/name_check": name_check,
     "/help": display_help,
     "/?": display_help,
-    "/exit": exit_program
+    "/exit": exit_program,
+    "/fakedata": faker_null,
 }
 
 def commands():
