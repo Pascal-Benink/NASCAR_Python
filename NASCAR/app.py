@@ -70,8 +70,9 @@ def display_help():
     print("to get the current standings Use the command /standings ")
     print("to get the current standings filtered by name Use the command /standings_name ")
     print("to get the current standings with highest points Use the command /standings_best ")
-    print("to get the current standings with highest points Use the command /standings_manufacturer ")
-    print("to get the current standings with highest points Use the command /add_comp ")
+    print("to get the current standings with the chosen manufacturer /standings_manufacturer ")
+    print("Add a competitor to the database /add_comp ")
+    print("Delete a competitor from the database /delete_standing ")
 def exit_program():
     print("Program Offline")
     sys.exit()
