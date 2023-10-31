@@ -29,7 +29,7 @@ class SQLClient:
         self.cursor.execute(query, params)
         return self.cursor.fetchall()
 
-    def delete_all(self, query: str, params=None) -> dict:
+    def query_fix(self, query: str, params=None) -> dict:
         self.cursor.execute(query, params)
         self.db.commit()
 

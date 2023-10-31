@@ -121,7 +121,7 @@ def delete_stand():
     thechoice = str(input("Are you sure you want to delete \n" + current + " \ny/n:"))
 
     if thechoice == "y":
-        sql_client.delete_all("DELETE FROM standings WHERE Driver = '" + searchname + "';")
+        sql_client.query_fix("DELETE FROM standings WHERE Driver = '" + searchname + "';")
         print("Record deleted successfully.")
     elif thechoice == "n":
         print("Deletion canceled.")
@@ -146,11 +146,11 @@ def update():
 
         BHND = Points - MAX_POINTS
 
-        sql_client.delete_all(f"UPDATE standings SET Points = {Points}, BHND = {BHND} WHERE Driver = '{searchname}';")
+        sql_client.query_fix(f"UPDATE standings SET Points = {Points}, BHND = {BHND} WHERE Driver = '{searchname}';")
         print(f'{standing_collumn},BHND of {searchname} is now Updated to {Points} and {BHND}')
     else:
         value = input("What is the new value?: ")
-        sql_client.delete_all(f"UPDATE standings SET `{standing_collumn}` = {value} WHERE Driver = '{searchname}';")
+        sql_client.query_fix(f"UPDATE standings SET `{standing_collumn}` = {value} WHERE Driver = '{searchname}';")
         print(f'{standing_collumn} of {searchname} is now Updated to {value}')
 
 
@@ -160,7 +160,7 @@ def check_name():
         driver_name = data.get('Driver', '')  # Get the Driver value from the result
         if driver_name is None or driver_name == '':
             print(f' \033[91m ERR1 NULL/EMPTY PROBLEM: {driver_name} \033[0m')
-            sql_client.delete_all("DELETE FROM standings WHERE Driver IS NULL OR Driver = ''")
+            sql_client.query_fix("DELETE FROM standings WHERE Driver IS NULL OR Driver = ''")
             print('\033[92m Problem solved \033[0m')
         else:
             print(f" \033[92m No changes: {driver_name} \033[0m")
