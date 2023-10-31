@@ -77,6 +77,8 @@ def add_competitor():
         #
         # sql_client.fetch_all(query)
         # Define the keys and values you want to insert
+        # INSERT INTO standings (`Rank`, `Rank +/-`, `STS`, `Driver`, `Car #`, `Make`, `Points`, `BHND`, `PO PTS`, `P`, `Win`, `T5`, `T10`, `STG Win`)
+        # VALUES (110, NULL, 15, 'Sample Driver', 42, 'Sample Make', 500, 50, 10, 2, 3, 8, 12, 4);
         keys = (
         "`Rank`", "`Rank +/-`", "`STS`", "`Driver`", "`Car #`", "`Make`", "`Points`", "`BHND`", "`PO PTS`", "`P`", "`Win`", "`T5`", "`T10`",
         "`STG Win`")
@@ -115,5 +117,25 @@ def delete_stand():
     else:
         print("Invalid input")
 
+def update():
+    searchname = input("What driver's standings do you want to Update?: ")
 
+    standind_collumn = input("What standing do you want to Update?: ")
+
+    if standind_collumn == 'Points':
+        MAX_POINTS_data = sql_client.fetch_all(
+            "SELECT DISTINCT Points FROM standings WHERE `Points` = (SELECT MAX(`Points`) FROM standings);")
+        if MAX_POINTS_data:
+            MAX_POINTS = MAX_POINTS_data[0].get('Points', 0)
+        else:
+            print("No data found")
+
+        Points = int(input("What is the new value?: "))
+
+        BHND = Points - MAX_POINTS
+
+        sql_client.delete_all(f"UPDATE standings SET Points = {Points}, BHND = {BHND} WHERE Driver = '{searchname}';")
+    else:
+        value = input("What is the new value?: ")
+        # sql_client.delete_all(f"UPDATE standings SET Points = {Points}, BHND = {BHND} WHERE Driver = {searchname};")
 

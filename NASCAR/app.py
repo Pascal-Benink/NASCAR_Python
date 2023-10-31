@@ -66,6 +66,8 @@ def get_standings_manufacturer():
     get_info_driver_manufacturer()
 def add_comp():
     add_competitor()
+def update_standing():
+    update()
 def display_help():
     print("to get the current standings Use the command /standings ")
     print("to get the current standings filtered by name Use the command /standings_name ")
@@ -83,6 +85,7 @@ commands_dict = {
     "/standings_manufacturer": get_standings_manufacturer,
     "/delete_standing": delete,
     "/add_comp": add_comp,
+    "/update_standing": update_standing,
     "/help": display_help,
     "/?": display_help,
     "/exit": exit_program
