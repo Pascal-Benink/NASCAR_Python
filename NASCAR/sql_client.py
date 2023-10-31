@@ -31,6 +31,7 @@ class SQLClient:
 
     def delete_all(self, query: str, params=None) -> dict:
         self.cursor.execute(query, params)
+        self.db.commit()
 
 
     def insert(self, keys: tuple, values: tuple, table: str):
