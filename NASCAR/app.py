@@ -59,9 +59,9 @@ def display_help():
     print("to update the whole database with all the real information current please use /update_current_standings")
     print("to update the whole database with all the real information from a custom year please use "
           "/update_custom_standings")
-    print("to delete all standings use /delete_all_standings")
+    # print("to delete all standings use /delete_all_standings")
     print("Update a competitor from the database /update_standing ")
-    # print("to use multiple commands at a time type ; between the commands like /add_comp; /delete_standing")
+    print("to use multiple commands at a time type ; between the commands like /add_comp; /delete_standing")
 
 def exit_program():
     print("Program Offline")

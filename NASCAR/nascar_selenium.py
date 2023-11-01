@@ -84,15 +84,38 @@ def getstandings_curent():
             if len(row) >= 2:
                 # Remove the second cell (from "Rank +/-") by slicing the list
                 modified_row = row[:1] + row[2:]
+
+                # Remove commas from numeric columns (e.g., 'Points' and 'BHND')
+                modified_row[5] = modified_row[5].replace(',', '')
+                modified_row[6] = modified_row[6].replace(',', '')
+
+                for i in range(len(modified_row)):
+                    if modified_row[i] == "--":
+                        modified_row[i] = None
+
                 csv_writer.writerow(modified_row)
             else:
                 # Handle rows with less than two cells (e.g., header row)
                 csv_writer.writerow(row)
 
     print("Processing complete. Modified data saved to", output_csv_file)
-    # csv = f'{year} NASCAR Cup Series Driver Points Standings.csv'
-    # print(f'No Updateing the database with the larest Nascar Cup standings of {year}')
-    # insertallstandings(csv)
+
+    csv_file = f'NASCAR/downloads/{year} NASCAR Cup Series Driver Points Standings_modified.csv'
+    print(f'Now Updating the database with the latest Nascar Cup standings of {year}')
+    sql_client.query_fix("DELETE FROM standings;")
+    print("Old records deleted successfully.")
+    table_name = "standings"
+
+    with open(csv_file, 'r') as csv_file:
+        csv_reader = csv.DictReader(csv_file)
+        for row in csv_reader:
+            # Assuming the CSV columns match the table columns
+            keys = row.keys()
+            values = tuple(row.values())
+            values = tuple(None if value == '' else value for value in values)
+            sql_client.insert(keys, values, table_name)
+
+    print("Data from the new CSV file has been inserted into the database.")
 def getstandings_custom():
     year = input('Please enter the year you want to get the NASCAR Data of: ')
 
@@ -171,6 +194,5 @@ def getstandings_custom():
                 csv_writer.writerow(row)
 
     print("Processing complete. Modified data saved to", output_csv_file)
-    # csv = f'{year} NASCAR Cup Series Driver Points Standings_modified.csv'
-    # print(f'No Updateing the database with the larest Nascar Cup standings of {year}')
-    # insertallstandings(csv)
+    # csv_file = f'{year} NASCAR Cup Series Driver Points Standings_modified.csv'
+    # print(f'Now Updating the database with the latest Nascar Cup standings of {year}')

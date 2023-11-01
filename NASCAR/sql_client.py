@@ -35,7 +35,7 @@ class SQLClient:
 
 
     def insert(self, keys: tuple, values: tuple, table: str):
-        key_str = ", ".join(keys)
+        key_str = ", ".join([f"`{key}`" for key in keys])
         val_str = ", ".join(["%s"] * len(keys))
         q = f"INSERT INTO {table} ({key_str}) VALUES ({val_str})"
         self.cursor.execute(q, values)  # Use the `values` tuple here

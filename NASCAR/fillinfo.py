@@ -1,3 +1,5 @@
+import csv
+
 from sql_client import SQLClient
 
 sql_client = SQLClient()
@@ -12,6 +14,3 @@ def deleterallinfo():
         print("Deletion canceled.")
     else:
         print("Invalid input")
-
-def insertallstandings(csv):
-    print("Invalid input")
