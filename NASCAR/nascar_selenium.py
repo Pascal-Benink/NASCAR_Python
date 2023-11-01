@@ -5,6 +5,7 @@ from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import os
+from fillinfo import *
 
 def getstandings_curent():
     today = datetime.date.today()
@@ -15,6 +16,13 @@ def getstandings_curent():
     download_folder = "NASCAR/downloads"
     download_path = os.path.abspath(download_folder)
 
+    file_path = f"NASCAR/downloads/{year} NASCAR Cup Series Driver Points Standings.csv"
+
+    # Check if the file exists
+    if os.path.exists(file_path):
+        # If the file exists, delete it
+        os.remove(file_path)
+
     firefox_options = Options()
     firefox_options.set_preference("browser.download.folderList", 2)  # 2 indicates a custom location
     firefox_options.set_preference("browser.download.dir", download_path)
@@ -24,7 +32,7 @@ def getstandings_curent():
 
     # Navigate to the website
     base_url = "https://frcs.pro/nascar/cup/drivers/point-standings/"
-    current_page = 35  # Starting page
+    current_page = 36  # Starting page
 
     while current_page >= 0:
         url = f"{base_url}{year}/{current_page}"
@@ -45,6 +53,7 @@ def getstandings_curent():
                 )
                 csv_button.click()
                 print('downloading')
+
                 break  # Data found, exit the loop
 
             print(f"No data available on page {current_page}. Going back one page...")
@@ -53,8 +62,11 @@ def getstandings_curent():
         except Exception as e:
             print(f"Error: {e}")
     driver.quit()
+    # csv = f'{year} NASCAR Cup Series Driver Points Standings.csv'
+    # print(f'No Updateing the database with the larest Nascar Cup standings of {year}')
+    # insertallstandings(csv)
 def getstandings_custom():
-    year = input('Please enter the year you want to get the NASCAR Data of')
+    year = input('Please enter the year you want to get the NASCAR Data of: ')
 
     download_folder = "NASCAR/downloads"
     download_path = os.path.abspath(download_folder)
@@ -68,7 +80,7 @@ def getstandings_custom():
 
     # Navigate to the website
     base_url = "https://frcs.pro/nascar/cup/drivers/point-standings/"
-    current_page = 35  # Starting page
+    current_page = 36  # Starting page
 
     while current_page >= 0:
         url = f"{base_url}{year}/{current_page}"
@@ -96,3 +108,6 @@ def getstandings_custom():
         except Exception as e:
             print(f"Error: {e}")
     driver.quit()
+    # csv = f'{year} NASCAR Cup Series Driver Points Standings.csv'
+    # print(f'No Updateing the database with the larest Nascar Cup standings of {year}')
+    # insertallstandings(csv)

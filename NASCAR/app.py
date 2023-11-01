@@ -1,6 +1,7 @@
 import sys
 from NASCAR.nascar_selenium import *
 from getinfo import *
+from fillinfo import *
 
 restart = "N"
 
@@ -44,6 +45,9 @@ def updatecurrentstandings():
 def updatecustomstandings():
     getstandings_custom()
 
+# def deleteallstandings():
+#     deleterallinfo()
+
 def display_help():
     print("to get the current standings Use the command /standings ")
     print("to get the current standings filtered by name Use the command /standings_name ")
@@ -54,9 +58,10 @@ def display_help():
     print("Update a competitor from the database /update_standing ")
     print("to update the whole database with all the real information current please use /update_current_standings")
     print("to update the whole database with all the real information from a custom year please use "
-          "/update_current_standings")
+          "/update_custom_standings")
+    print("to delete all standings use /delete_all_standings")
     print("Update a competitor from the database /update_standing ")
-    print("to use multiple commands at a time type ; between the commands like /add_comp; /delete_standing")
+    # print("to use multiple commands at a time type ; between the commands like /add_comp; /delete_standing")
 
 def exit_program():
     print("Program Offline")
@@ -78,6 +83,7 @@ commands_dict = {
     "/update_current_standings": updatecurrentstandings,
     "/update_custom_standings": updatecustomstandings,
     "/custom": custom_selecting,
+    # "/delete_all_standings": deleteallstandings,
 }
 
 
