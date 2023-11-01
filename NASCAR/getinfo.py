@@ -8,9 +8,13 @@ BLUE = '\033[94m'
 RESET = '\033[0m'
 
 
+def green_print(text):
+    print(GREEN + str(text) + RESET)
+
+
 def get_info():
     current_standings = sql_client.fetch_all("SELECT `Rank`, Driver, `Car #`, Points FROM standings;")
-    print(GREEN + "DATA FOUND!" + RESET)
+    green_print('DATA FOUND!')
     print("The current NASCAR Cup Standings are: ")
     for data in current_standings:
         print(data)
@@ -19,10 +23,10 @@ def get_info():
 def custom_select():
     print('This custom query command only uses SELECT and no DELETE/INPUT/UPDATE')
     try:
-        thing = input(f"Give me a query to run: ")
+        query = input(f"Give me a query to run: ")
 
-        data = sql_client.fetch_all(thing)
-        print(GREEN + "DATA FOUND!" + RESET)
+        data = sql_client.fetch_all(query)
+        green_print('DATA FOUND!')
         for current_standing in data:
             print(current_standing)
 
@@ -37,7 +41,6 @@ def custom_select():
             print(RED + f"An SQL error occurred: {e}" + RESET)
 
 
-# Call the function
 
 
 def get_info_from_name(name):
@@ -48,7 +51,7 @@ def get_info_from_name(name):
     current_standings_str = str(current_standings)
 
     print("The current NASCAR Cup Standings are: ")
-    print(GREEN + "DATA FOUND!" + RESET)
+    green_print('DATA FOUND!')
     for data in current_standings:
         print(data)
 
@@ -58,7 +61,7 @@ def get_info_best():
         "SELECT `Rank`, Driver, `Car #`, Points FROM standings WHERE `Points` = (SELECT MAX(`Points`) FROM standings);")
 
     current_standings_str = str(current_standings)
-    print(GREEN + "DATA FOUND!" + RESET)
+    green_print('DATA FOUND!')
     print("The current NASCAR Cup Standings are: ")
     for data in current_standings:
         print(data)
@@ -74,7 +77,7 @@ def get_info_driver_manufacturer():
     current_standings_str = str(current_standings)
 
     print("The current NASCAR Cup Standings are: ")
-    print(GREEN + "DATA FOUND!" + RESET)
+    green_print('DATA FOUND!')
     for data in current_standings:
         print(data)
 
@@ -88,23 +91,23 @@ def add_competitor():
     else:
         print("No data found")
     # print(str(MAX_POINTS))
-    Rank = int(input("Input standings rank here: "))
-    STS = int(input("Input Starts here: "))
-    Driver = str(input("Input DRIVER name here: "))
-    Car = int(input("Input Car number here: "))
-    Make = str(input("Input Manufacturer name here: "))
-    Points = int(input("Input Points here: "))
-    PO_PTS = int(input("Input Playoff Points here: "))
-    P = int(input("Input Poles here: "))
-    Win = int(input("Input wins here: "))
-    T5 = int(input("Input number of Top 5 here: "))
-    T10 = int(input("Input number of Top 10 name here: "))
-    STG_Win = int(input("Input stage Wins here: "))
+    rank = int(input("Input standings rank here: "))
+    sts = int(input("Input Starts here: "))
+    driver = str(input("Input DRIVER name here: "))
+    car = int(input("Input Car number here: "))
+    make = str(input("Input Manufacturer name here: "))
+    points = int(input("Input Points here: "))
+    po_pts = int(input("Input Playoff Points here: "))
+    p = int(input("Input Poles here: "))
+    win = int(input("Input wins here: "))
+    t5 = int(input("Input number of Top 5 here: "))
+    t10 = int(input("Input number of Top 10 name here: "))
+    stg_win = int(input("Input stage Wins here: "))
 
-    BHND = Points - MAX_POINTS
+    bhnd = points - MAX_POINTS
 
     confirm = input(f'DO you want to add the competitor standing: \n'
-                    f'Rank: {Rank}, STS: {STS}, Driver: {Driver}, Car: {Car}, Make: {Make}, Points: {Points}, BHND: {BHND}, PO_PTS: {PO_PTS}, P: {P}, Win: {Win}, T5: {T5}, T10: {T10}, STG_Win: {STG_Win}\n'
+                    f'Rank: {rank}, STS: {sts}, Driver: {driver}, Car: {car}, Make: {make}, Points: {points}, BHND: {bhnd}, PO_PTS: {po_pts}, P: {p}, Win: {win}, T5: {t5}, T10: {t10}, STG_Win: {stg_win}\n'
                     f'Y/N: ')
 
     if confirm == 'Y' or confirm == 'y':
@@ -112,12 +115,12 @@ def add_competitor():
             "`Rank`", "`STS`", "`Driver`", "`Car #`", "`Make`", "`Points`", "`BHND`", "`PO PTS`", "`P`",
             "`Win`", "`T5`", "`T10`",
             "`STG Win`")
-        values = (Rank, STS, Driver, Car, Make, Points, BHND, PO_PTS, P, Win, T5, T10, STG_Win)
+        values = (rank, sts, driver, car, make, points, bhnd, po_pts, p, win, t5, t10, stg_win)
         table = "standings"
 
         # Use the insert function to insert the data
         sql_client.insert(keys, values, table)
-        print(GREEN + "INSERT Successfull!" + RESET)
+        green_print('insert success')
     elif confirm == 'N' or confirm == 'n':
         print('Competitor standing add Canceled')
     else:
@@ -141,7 +144,7 @@ def delete_stand():
 
     if thechoice == "y":
         sql_client.query_fix("DELETE FROM standings WHERE Driver = '" + searchname + "';")
-        print(GREEN + "DATA DELETED!" + RESET)
+        green_print('DATA DELETED!')
     elif thechoice == "n":
         print("Deletion canceled.")
     else:
@@ -180,7 +183,7 @@ def check_name():
         if driver_name is None or driver_name == '':
             print(f' \033[91m ERR1 NULL/EMPTY PROBLEM: {driver_name} \033[0m')
             sql_client.query_fix("DELETE FROM standings WHERE Driver IS NULL OR Driver = ''")
-            print('\033[92m Problem solved \033[0m')
+            green_print('problem solved')
         else:
             print(f" \033[92m No changes: {driver_name} \033[0m")
 
@@ -191,4 +194,4 @@ def insert_tester():
         amount += 1
         sql_client.query_fix("INSERT INTO standings (Driver) VALUES (NULl)")
         print(f"fake null {amount} made!")
-        print(GREEN + "ADDING COMPLETE!" + RESET)
+        green_print('DATA ADDED!')
