@@ -10,6 +10,7 @@ def getstandings_curent():
     today = datetime.date.today()
 
     year = today.year
+    print('Preparing download:')
 
     download_folder = "NASCAR/downloads"
     download_path = os.path.abspath(download_folder)

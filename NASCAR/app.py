@@ -1,6 +1,4 @@
 import sys
-import os
-
 from NASCAR.nascar_selenium import *
 from getinfo import *
 
@@ -77,7 +75,6 @@ commands_dict = {
     "/?": display_help,
     "/exit": exit_program,
     "/fakedata": faker_null,
-
     "/update_current_standings": updatecurrentstandings,
     "/update_custom_standings": updatecustomstandings,
     "/custom": custom_selecting,
