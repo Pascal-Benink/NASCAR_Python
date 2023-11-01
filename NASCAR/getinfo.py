@@ -112,10 +112,10 @@ def add_competitor():
 
     if confirm == 'Y' or confirm == 'y':
         keys = (
-            "`Rank`", "`Rank +/-`", "`STS`", "`Driver`", "`Car #`", "`Make`", "`Points`", "`BHND`", "`PO PTS`", "`P`",
+            "`Rank`", "`STS`", "`Driver`", "`Car #`", "`Make`", "`Points`", "`BHND`", "`PO PTS`", "`P`",
             "`Win`", "`T5`", "`T10`",
             "`STG Win`")
-        values = (Rank, None, STS, Driver, Car, Make, Points, BHND, PO_PTS, P, Win, T5, T10, STG_Win)
+        values = (Rank, STS, Driver, Car, Make, Points, BHND, PO_PTS, P, Win, T5, T10, STG_Win)
         table = "standings"
 
         # Use the insert function to insert the data
