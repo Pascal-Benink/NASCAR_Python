@@ -16,8 +16,6 @@ def get_info():
         print(data)
 
 
-
-
 def custom_select():
     print('This custom query command only uses SELECT and no DELETE/INPUT/UPDATE')
     try:
@@ -30,17 +28,16 @@ def custom_select():
 
     except Exception as e:
 
-        if "You have an error in your SQL syntax" in str(e): # Example: Check for a specific MySQL error code
+        if "You have an error in your SQL syntax" in str(e):  # Example: Check for a specific MySQL error code
             print(RED + "You have a syntax error please use a valid query" + RESET)
 
         elif "1146 (42S02)" in str(e):
-            print(RED +"this table doesnt exist try using a valid table" + RESET)
+            print(RED + "this table doesnt exist try using a valid table" + RESET)
         else:
             print(RED + f"An SQL error occurred: {e}" + RESET)
 
+
 # Call the function
-
-
 
 
 def get_info_from_name(name):
@@ -173,7 +170,7 @@ def update():
     else:
         value = input("What is the new value?: ")
         sql_client.query_fix(f"UPDATE standings SET `{standing_collumn}` = {value} WHERE Driver = '{searchname}';")
-        print(GREEN+ f'{standing_collumn} of {searchname} is now Updated to {value}' + RESET)
+        print(GREEN + f'{standing_collumn} of {searchname} is now Updated to {value}' + RESET)
 
 
 def check_name():
@@ -195,5 +192,3 @@ def insert_tester():
         sql_client.query_fix("INSERT INTO standings (Driver) VALUES (NULl)")
         print(f"fake null {amount} made!")
         print(GREEN + "ADDING COMPLETE!" + RESET)
-
-

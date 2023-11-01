@@ -8,6 +8,7 @@ from selenium.webdriver.support import expected_conditions as EC
 import os
 from fillinfo import *
 
+
 def getstandings_curent():
     today = datetime.date.today()
 
@@ -134,6 +135,8 @@ def getstandings_curent():
                 sql_client.insert(keys, values, table_name)
 
     print("Data Has been updated.")
+
+
 def getstandings_custom():
     year = input('Please enter the year you want to get the NASCAR Data of: ')
 

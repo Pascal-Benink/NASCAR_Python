@@ -4,6 +4,7 @@ import mysql.connector
 
 load_dotenv()
 
+
 class SQLClient:
 
     def __init__(self):
@@ -32,7 +33,6 @@ class SQLClient:
     def query_fix(self, query: str, params=None) -> dict:
         self.cursor.execute(query, params)
         self.db.commit()
-
 
     def insert(self, keys: tuple, values: tuple, table: str):
         key_str = ", ".join([f"`{key}`" for key in keys])

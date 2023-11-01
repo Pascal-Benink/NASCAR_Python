@@ -4,6 +4,7 @@ from sql_client import SQLClient
 
 sql_client = SQLClient()
 
+
 def deleterallinfo():
     thechoice = str(input("Are you sure you want to delete all info? Y/N:"))
 

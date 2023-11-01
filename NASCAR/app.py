@@ -5,45 +5,60 @@ from fillinfo import *
 
 restart = "N"
 
+
 def restart_program():
     python = sys.executable
     os.execl(python, python, *sys.argv)
 
+
 def custom_selecting():
     custom_select()
+
+
 def delete():
     delete_stand()
 
+
 def get_standings():
     get_info()
+
 
 def get_standings_name():
     searchname = input("Input driver name here: ")
     get_info_from_name(searchname)
 
+
 def get_standings_best():
     get_info_best()
+
 
 def get_standings_manufacturer():
     get_info_driver_manufacturer()
 
+
 def add_comp():
     add_competitor()
+
 
 def update_standing():
     update()
 
+
 def name_check():
     check_name()
+
 
 def faker_null():
     insert_tester()
 
+
 def updatecurrentstandings():
     getstandings_curent()
 
+
 def updatecustomstandings():
     getstandings_custom()
+
 
 # def deleteallstandings():
 #     deleterallinfo()
@@ -63,9 +78,11 @@ def display_help():
     print("Update a competitor from the database /update_standing ")
     print("to use multiple commands at a time type ; between the commands like /add_comp; /delete_standing")
 
+
 def exit_program():
     print("Program Offline")
     sys.exit()
+
 
 commands_dict = {
     "/standings": get_standings,
@@ -106,6 +123,7 @@ def commands():
             print(f"Command '{single_command}' not found")
 
     commands()
+
 
 print("Welcome to the Unofficial NASCAR info Python script")
 commands()
