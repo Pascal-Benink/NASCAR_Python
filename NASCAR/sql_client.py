@@ -40,3 +40,9 @@ class SQLClient:
         q = f"INSERT INTO {table} ({key_str}) VALUES ({val_str})"
         self.cursor.execute(q, values)  # Use the `values` tuple here
         self.db.commit()
+
+    def check_table_exists(self, table_name):
+        # Check if the table exists in the database
+        check_query = f"SHOW TABLES LIKE '{table_name}'"
+        self.cursor.execute(check_query)
+        return bool(self.cursor.fetchone())

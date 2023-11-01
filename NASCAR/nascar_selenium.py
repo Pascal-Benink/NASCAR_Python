@@ -102,20 +102,34 @@ def getstandings_curent():
 
     csv_file = f'NASCAR/downloads/{year} NASCAR Cup Series Driver Points Standings_modified.csv'
     print(f'Now Updating the database with the latest Nascar Cup standings of {year}')
-    sql_client.query_fix("DELETE FROM standings;")
+    if sql_client.check_table_exists('standings'):
+        sql_client.query_fix("DELETE FROM standings;")
     print("Old records deleted successfully.")
     table_name = "standings"
 
-    with open(csv_file, 'r') as csv_file:
-        csv_reader = csv.DictReader(csv_file)
-        for row in csv_reader:
-            # Assuming the CSV columns match the table columns
-            keys = row.keys()
-            values = tuple(row.values())
-            values = tuple(None if value == '' else value for value in values)
-            sql_client.insert(keys, values, table_name)
+    if sql_client.check_table_exists(table_name):
+        with open(csv_file, 'r') as csv_file:
+            csv_reader = csv.DictReader(csv_file)
+            for row in csv_reader:
+                # Assuming the CSV columns match the table columns
+                keys = row.keys()
+                values = tuple(row.values())
+                values = tuple(None if value == '' else value for value in values)
+                sql_client.insert(keys, values, table_name)
+    else:
+        q = 'CREATE TABLE `standings` (`Rank` INT DEFAULT NULL, `STS` INT DEFAULT NULL, `Driver` VARCHAR(255) DEFAULT NULL, `Car #` INT DEFAULT NULL, `Make` VARCHAR(255) DEFAULT NULL, `Points` INT DEFAULT NULL, `BHND` INT DEFAULT NULL, `PO PTS` INT DEFAULT NULL, `P` INT DEFAULT NULL, `Win` INT DEFAULT NULL, `T5` INT DEFAULT NULL, `T10` INT DEFAULT NULL, `STG Win` INT DEFAULT NULL)'
+        sql_client.query_fix(q)
 
-    print("Data from the new CSV file has been inserted into the database.")
+        with open(csv_file, 'r') as csv_file:
+            csv_reader = csv.DictReader(csv_file)
+            for row in csv_reader:
+                # Assuming the CSV columns match the table columns
+                keys = row.keys()
+                values = tuple(row.values())
+                values = tuple(None if value == '' else value for value in values)
+                sql_client.insert(keys, values, table_name)
+
+    print("Data Has been updated.")
 def getstandings_custom():
     year = input('Please enter the year you want to get the NASCAR Data of: ')
 
@@ -188,11 +202,48 @@ def getstandings_custom():
             if len(row) >= 2:
                 # Remove the second cell (from "Rank +/-") by slicing the list
                 modified_row = row[:1] + row[2:]
+
+                # Remove commas from numeric columns (e.g., 'Points' and 'BHND')
+                modified_row[5] = modified_row[5].replace(',', '')
+                modified_row[6] = modified_row[6].replace(',', '')
+
+                for i in range(len(modified_row)):
+                    if modified_row[i] == "--":
+                        modified_row[i] = None
+
                 csv_writer.writerow(modified_row)
             else:
                 # Handle rows with less than two cells (e.g., header row)
                 csv_writer.writerow(row)
 
     print("Processing complete. Modified data saved to", output_csv_file)
-    # csv_file = f'{year} NASCAR Cup Series Driver Points Standings_modified.csv'
-    # print(f'Now Updating the database with the latest Nascar Cup standings of {year}')
+
+    csv_file = f'NASCAR/downloads/{year} NASCAR Cup Series Driver Points Standings_modified.csv'
+    print(f'Now Updating the database with the latest Nascar Cup standings of {year}')
+    sql_client.query_fix("DELETE FROM standings;")
+    print("Old records deleted successfully.")
+    table_name = "standings"
+
+    if sql_client.check_table_exists(table_name):
+        with open(csv_file, 'r') as csv_file:
+            csv_reader = csv.DictReader(csv_file)
+            for row in csv_reader:
+                # Assuming the CSV columns match the table columns
+                keys = row.keys()
+                values = tuple(row.values())
+                values = tuple(None if value == '' else value for value in values)
+                sql_client.insert(keys, values, table_name)
+    else:
+        q = 'CREATE TABLE `standings` (`Rank` INT DEFAULT NULL, `STS` INT DEFAULT NULL, `Driver` VARCHAR(255) DEFAULT NULL, `Car #` INT DEFAULT NULL, `Make` VARCHAR(255) DEFAULT NULL, `Points` INT DEFAULT NULL, `BHND` INT DEFAULT NULL, `PO PTS` INT DEFAULT NULL, `P` INT DEFAULT NULL, `Win` INT DEFAULT NULL, `T5` INT DEFAULT NULL, `T10` INT DEFAULT NULL, `STG Win` INT DEFAULT NULL)'
+        sql_client.query_fix(q)
+
+        with open(csv_file, 'r') as csv_file:
+            csv_reader = csv.DictReader(csv_file)
+            for row in csv_reader:
+                # Assuming the CSV columns match the table columns
+                keys = row.keys()
+                values = tuple(row.values())
+                values = tuple(None if value == '' else value for value in values)
+                sql_client.insert(keys, values, table_name)
+
+    print("Data Has been updated.")
