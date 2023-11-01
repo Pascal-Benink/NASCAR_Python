@@ -1,5 +1,7 @@
 import sys
 import os
+
+from NASCAR.nascar_selenium import *
 from getinfo import *
 
 restart = "N"
@@ -36,6 +38,12 @@ def name_check():
 def faker_null():
     insert_tester()
 
+def updatecurrentstandings():
+    getstandings_curent()
+
+def updatecustomstandings():
+    getstandings_custom()
+
 def display_help():
     print("to get the current standings Use the command /standings ")
     print("to get the current standings filtered by name Use the command /standings_name ")
@@ -43,6 +51,10 @@ def display_help():
     print("to get the current standings with the chosen manufacturer /")
     print("Add a competitor to the database /add_comp ")
     print("Delete a competitor from the database /delete_standing ")
+    print("Update a competitor from the database /update_standing ")
+    print("to update the whole database with all the real information current please use /update_current_standings")
+    print("to update the whole database with all the real information from a custom year please use "
+          "/update_current_standings")
     print("Update a competitor from the database /update_standing ")
     print("to use multiple commands at a time type ; between the commands like /add_comp; /delete_standing")
 
@@ -63,6 +75,8 @@ commands_dict = {
     "/?": display_help,
     "/exit": exit_program,
     "/fakedata": faker_null,
+    "/update_current_standings": updatecurrentstandings,
+    "/update_custom_standings": updatecustomstandings,
 }
 
 def commands():

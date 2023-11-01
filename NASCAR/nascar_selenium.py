@@ -43,6 +43,7 @@ def getstandings_curent():
                         (By.XPATH, "//button[@class='btn btn-secondary buttons-csv buttons-html5']"))
                 )
                 csv_button.click()
+                print('downloading')
                 break  # Data found, exit the loop
 
             print(f"No data available on page {current_page}. Going back one page...")
