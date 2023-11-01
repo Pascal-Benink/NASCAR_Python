@@ -42,7 +42,7 @@ def getstandings_curent():
     base_url = "https://frcs.pro/nascar/cup/drivers/point-standings/"
     current_page = 36  # Starting page
 
-    while current_page >= 0:
+    while current_page >= 1:
         url = f"{base_url}{year}/{current_page}"
         driver.get(url)
 
@@ -64,6 +64,10 @@ def getstandings_curent():
 
                 break  # Data found, exit the loop
 
+            if current_page == 1:
+                print('Data not found update aborted')
+                driver.quit()
+                return
             print(f"No data available on page {current_page}. Going back one page...")
             current_page -= 1  # Go back one page by decrementing current_page
 
@@ -183,6 +187,10 @@ def getstandings_custom():
                 csv_button.click()
                 break  # Data found, exit the loop
 
+            if current_page == 1:
+                print('Data not found update aborted')
+                driver.quit()
+                return
             print(f"No data available on page {current_page}. Going back one page...")
             current_page -= 1  # Go back one page by decrementing current_page
 
