@@ -6,10 +6,6 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import os
 
-import selenium
-print("Selenium version:", selenium.__version__)
-
-
 def getstandings_curent():
     today = datetime.date.today()
 
