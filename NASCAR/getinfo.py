@@ -1,4 +1,5 @@
 from sql_client import SQLClient
+import pymysql
 
 sql_client = SQLClient()
 
@@ -11,6 +12,31 @@ def get_info():
     print("The current NASCAR Cup Standings are: ")
     for data in current_standings:
         print(data)
+
+
+
+
+def custom_select():
+    print('This custom query command only uses SELECT and no DELETE/INPUT/UPDATE')
+    try:
+        thing = input(f"Give me a query to run: ")
+        data = sql_client.fetch_all(thing)  # Remove the single quotes around 'thing'
+        for current_standing in data:
+            print(current_standing)
+
+    except Exception as e:
+
+        if "You have an error in your SQL syntax" in str(e): # Example: Check for a specific MySQL error code
+            print("You have a syntax error please use a valid query")
+
+        elif "1146 (42S02)" in str(e):
+            print("this table doesnt exist try using a valid table")
+        else:
+            print(f"An SQL error occurred: {e}")
+
+# Call the function
+
+
 
 
 def get_info_from_name(name):
@@ -172,5 +198,6 @@ def insert_tester():
         amount += 1
         sql_client.query_fix("INSERT INTO standings (Driver) VALUES (NULl)")
         print(f"fake null {amount} made!")
+        print("Generating complete")
 
-print("Generating complete")
+

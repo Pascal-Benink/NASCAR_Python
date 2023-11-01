@@ -10,6 +10,8 @@ def restart_program():
     python = sys.executable
     os.execl(python, python, *sys.argv)
 
+def custom_selecting():
+    custom_select()
 def delete():
     delete_stand()
 
@@ -75,9 +77,12 @@ commands_dict = {
     "/?": display_help,
     "/exit": exit_program,
     "/fakedata": faker_null,
+
     "/update_current_standings": updatecurrentstandings,
     "/update_custom_standings": updatecustomstandings,
+    "/custom": custom_selecting,
 }
+
 
 def commands():
     print("for help do /help or /?")
