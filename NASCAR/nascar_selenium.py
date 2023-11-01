@@ -1,3 +1,4 @@
+import csv
 import datetime
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -22,6 +23,13 @@ def getstandings_curent():
     if os.path.exists(file_path):
         # If the file exists, delete it
         os.remove(file_path)
+
+    file_path2 = f"NASCAR/downloads/{year} NASCAR Cup Series Driver Points Standings_modified.csv"
+
+    # Check if the file exists
+    if os.path.exists(file_path2):
+        # If the file exists, delete it
+        os.remove(file_path2)
 
     firefox_options = Options()
     firefox_options.set_preference("browser.download.folderList", 2)  # 2 indicates a custom location
@@ -62,14 +70,50 @@ def getstandings_curent():
         except Exception as e:
             print(f"Error: {e}")
     driver.quit()
+    # Define the file paths
+    input_csv_file = f"NASCAR/downloads/{year} NASCAR Cup Series Driver Points Standings.csv"
+    output_csv_file = f"NASCAR/downloads/{year} NASCAR Cup Series Driver Points Standings_modified.csv"
+
+    # Process the CSV file
+    with open(input_csv_file, 'r') as input_file, open(output_csv_file, 'w', newline='') as output_file:
+        csv_reader = csv.reader(input_file)
+        csv_writer = csv.writer(output_file)
+
+        for row in csv_reader:
+            # Check if there are at least two cells in the row (e.g., to skip the header row)
+            if len(row) >= 2:
+                # Remove the second cell (from "Rank +/-") by slicing the list
+                modified_row = row[:1] + row[2:]
+                csv_writer.writerow(modified_row)
+            else:
+                # Handle rows with less than two cells (e.g., header row)
+                csv_writer.writerow(row)
+
+    print("Processing complete. Modified data saved to", output_csv_file)
     # csv = f'{year} NASCAR Cup Series Driver Points Standings.csv'
     # print(f'No Updateing the database with the larest Nascar Cup standings of {year}')
     # insertallstandings(csv)
 def getstandings_custom():
     year = input('Please enter the year you want to get the NASCAR Data of: ')
 
+    print('Preparing download:')
+
     download_folder = "NASCAR/downloads"
     download_path = os.path.abspath(download_folder)
+
+    file_path = f"NASCAR/downloads/{year} NASCAR Cup Series Driver Points Standings.csv"
+
+    # Check if the file exists
+    if os.path.exists(file_path):
+        # If the file exists, delete it
+        os.remove(file_path)
+
+    file_path2 = f"NASCAR/downloads/{year} NASCAR Cup Series Driver Points Standings_modified.csv"
+
+    # Check if the file exists
+    if os.path.exists(file_path2):
+        # If the file exists, delete it
+        os.remove(file_path2)
 
     firefox_options = Options()
     firefox_options.set_preference("browser.download.folderList", 2)  # 2 indicates a custom location
@@ -108,6 +152,25 @@ def getstandings_custom():
         except Exception as e:
             print(f"Error: {e}")
     driver.quit()
-    # csv = f'{year} NASCAR Cup Series Driver Points Standings.csv'
+    input_csv_file = f"NASCAR/downloads/{year} NASCAR Cup Series Driver Points Standings.csv"
+    output_csv_file = f"NASCAR/downloads/{year} NASCAR Cup Series Driver Points Standings_modified.csv"
+
+    # Process the CSV file
+    with open(input_csv_file, 'r') as input_file, open(output_csv_file, 'w', newline='') as output_file:
+        csv_reader = csv.reader(input_file)
+        csv_writer = csv.writer(output_file)
+
+        for row in csv_reader:
+            # Check if there are at least two cells in the row (e.g., to skip the header row)
+            if len(row) >= 2:
+                # Remove the second cell (from "Rank +/-") by slicing the list
+                modified_row = row[:1] + row[2:]
+                csv_writer.writerow(modified_row)
+            else:
+                # Handle rows with less than two cells (e.g., header row)
+                csv_writer.writerow(row)
+
+    print("Processing complete. Modified data saved to", output_csv_file)
+    # csv = f'{year} NASCAR Cup Series Driver Points Standings_modified.csv'
     # print(f'No Updateing the database with the larest Nascar Cup standings of {year}')
     # insertallstandings(csv)
