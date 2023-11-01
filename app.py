@@ -10,9 +10,6 @@ def restart_program():
     os.execl(python, python, *sys.argv)
 
 
-def custom_selecting():
-    custom_select()
-
 
 def delete():
     delete_stand()
@@ -59,8 +56,6 @@ def updatecustomstandings():
     getstandings_custom()
 
 
-# def deleteallstandings():
-#     deleterallinfo()
 
 def display_help():
     print("to get the current standings Use the command /standings ")
@@ -98,8 +93,6 @@ commands_dict = {
     "/fakedata": faker_null,
     "/update_current_standings": updatecurrentstandings,
     "/update_custom_standings": updatecustomstandings,
-    "/custom": custom_selecting,
-    # "/delete_all_standings": deleteallstandings,
 }
 
 

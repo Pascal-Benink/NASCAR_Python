@@ -24,24 +24,6 @@ def get_info():
         print(data)
 
 
-def custom_select():
-    print('This custom query command only uses SELECT and no DELETE/INPUT/UPDATE')
-    try:
-        query = input(f"Give me a query to run: ")
-
-        data = sql_client.fetch_all(query)
-        green_print('DATA FOUND!')
-        for current_standing in data:
-            print(current_standing)
-
-    except Exception as e:
-
-        if "You have an error in your SQL syntax" in str(e):
-            error_text('Syntax error check your code')
-        elif "1146 (42S02)" in str(e):
-            error_text('Table not found insert a valid table')
-        else:
-            error_text('An sql error has occurred: ' + str(e))
 
 
 def get_info_from_name(name):
