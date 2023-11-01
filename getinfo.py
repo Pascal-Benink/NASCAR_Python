@@ -12,6 +12,10 @@ def green_print(text):
     print(GREEN + str(text) + RESET)
 
 
+def error_text(text):
+    print(RED + str(text) + RESET)
+
+
 def get_info():
     current_standings = sql_client.fetch_all("SELECT `Rank`, Driver, `Car #`, Points FROM standings;")
     green_print('DATA FOUND!')
@@ -32,15 +36,12 @@ def custom_select():
 
     except Exception as e:
 
-        if "You have an error in your SQL syntax" in str(e):  # Example: Check for a specific MySQL error code
-            print(RED + "You have a syntax error please use a valid query" + RESET)
-
+        if "You have an error in your SQL syntax" in str(e):
+            error_text('Syntax error check your code')
         elif "1146 (42S02)" in str(e):
-            print(RED + "this table doesnt exist try using a valid table" + RESET)
+            error_text('Table not found insert a valid table')
         else:
-            print(RED + f"An SQL error occurred: {e}" + RESET)
-
-
+            error_text('An sql error has occurred: ' + str(e))
 
 
 def get_info_from_name(name):
@@ -181,7 +182,7 @@ def check_name():
     for data in standings:
         driver_name = data.get('Driver', '')  # Get the Driver value from the result
         if driver_name is None or driver_name == '':
-            print(f' \033[91m ERR1 NULL/EMPTY PROBLEM: {driver_name} \033[0m')
+            error_text(f'ERR1 NULL problem found!: {driver_name}')
             sql_client.query_fix("DELETE FROM standings WHERE Driver IS NULL OR Driver = ''")
             green_print('problem solved')
         else:
