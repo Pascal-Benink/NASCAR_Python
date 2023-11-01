@@ -1,7 +1,6 @@
 import sys
-from NASCAR.nascar_selenium import *
+from nascar_selenium import *
 from getinfo import *
-from fillinfo import *
 
 restart = "N"
 
