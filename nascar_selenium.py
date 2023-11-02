@@ -160,6 +160,18 @@ def getstandings_curent():
 def getstandings_custom():
     year = input('Please enter the year you want to get the NASCAR Data of: ')
 
+    if not year.isdigit():
+        print("it needs to be year like: 2020")
+        year = input('Please enter the year you want to get the NASCAR Data of: ')
+        if not year.isdigit():
+            print("it needs to be year like: 2020")
+            year = input('Please enter the year you want to get the NASCAR Data of: ')
+            if not year.isdigit():
+                print("it needs to be year like: 2020, Final Warning")
+                year = input('Please enter the year you want to get the NASCAR Data of: ')
+                if not year.isdigit():
+                    print("You had more enough than ne chances")
+
     print('Preparing download:')
 
     download_folder = "NASCAR/downloads"
