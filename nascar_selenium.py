@@ -171,6 +171,7 @@ def getstandings_custom():
                 year = input('Please enter the year you want to get the NASCAR Data of: ')
                 if not year.isdigit():
                     print("You had more enough than ne chances")
+                    return
 
     print('Preparing download:')
 
