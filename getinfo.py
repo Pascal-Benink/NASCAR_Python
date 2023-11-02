@@ -146,28 +146,33 @@ def delete_stand():
 
 
 def update():
-    searchname = input("What driver's standings do you want to Update?: ")
+    try:
+        searchname = input("What driver's standings do you want to Update?: ")
 
-    standing_collumn = input("What standing do you want to Update?: ")
+        standing_collumn = input("What standing do you want to Update?: ")
 
-    if standing_collumn == 'Points':
-        MAX_POINTS_data = sql_client.fetch_all(
-            "SELECT DISTINCT Points FROM standings WHERE `Points` = (SELECT MAX(`Points`) FROM standings);")
-        if MAX_POINTS_data:
-            MAX_POINTS = MAX_POINTS_data[0].get('Points', 0)
+        if standing_collumn == 'Points':
+            MAX_POINTS_data = sql_client.fetch_all(
+                "SELECT DISTINCT Points FROM standings WHERE `Points` = (SELECT MAX(`Points`) FROM standings);")
+            if MAX_POINTS_data:
+                MAX_POINTS = MAX_POINTS_data[0].get('Points', 0)
+            else:
+                print("No data found")
+
+            Points = int(input("What is the new value?: "))
+
+            BHND = Points - MAX_POINTS
+
+            sql_client.query_fix(f"UPDATE standings SET Points = {Points}, BHND = {BHND} WHERE Driver = '{searchname}';")
+            print(f'{standing_collumn},BHND of {searchname} is now Updated to {Points} and {BHND}')
         else:
-            print("No data found")
-
-        Points = int(input("What is the new value?: "))
-
-        BHND = Points - MAX_POINTS
-
-        sql_client.query_fix(f"UPDATE standings SET Points = {Points}, BHND = {BHND} WHERE Driver = '{searchname}';")
-        print(f'{standing_collumn},BHND of {searchname} is now Updated to {Points} and {BHND}')
-    else:
-        value = input("What is the new value?: ")
-        sql_client.query_fix(f"UPDATE standings SET `{standing_collumn}` = {value} WHERE Driver = '{searchname}';")
-        print(GREEN + f'{standing_collumn} of {searchname} is now Updated to {value}' + RESET)
+            value = input("What is the new value?: ")
+            sql_client.query_fix(f"UPDATE standings SET `{standing_collumn}` = {value} WHERE Driver = '{searchname}';")
+            print(GREEN + f'{standing_collumn} of {searchname} is now Updated to {value}' + RESET)
+    except ValueError as e:
+        error_text(f"Invalid value: {e}")
+    except mysql.connector.errors.ProgrammingError as mysqlerror:
+        error_text(f"MySQL Error (Code {mysqlerror.errno}): {mysqlerror.msg}")
 
 
 def check_name():
