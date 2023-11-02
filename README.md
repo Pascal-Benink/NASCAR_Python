@@ -9,6 +9,6 @@ if you meet all the requirements the procedure is the following
 2. open the code in your code editor (Visual studio code, Pycharm ect.)
 3. use requirements.txt to install all packages using: pip install -r requirements. txt in the terminal
 4. do the following command in your code editor terminal: docker compose up -d
-5. and run the python script.\
+5. and run the python script.
 
 Now you have the script running the rest of the script explains itself
