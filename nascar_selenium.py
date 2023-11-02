@@ -11,7 +11,7 @@ from fillinfo import *
 def getstandings_curent():
     today = datetime.date.today()
 
-    year = today.year
+    year = str(today.year)
     print('Preparing download:')
 
     download_folder = "NASCAR/downloads"
@@ -74,6 +74,19 @@ def getstandings_curent():
         except Exception as e:
             print(f"Error: {e}")
     driver.quit()
+
+    files = os.listdir(download_path)
+
+    # Search for a file that contains the year
+    matching_files = [file for file in files if year in file]
+
+    if matching_files:
+        for matching_file in matching_files:
+            correct = download_path + "/" + f"{year} NASCAR Cup Series Driver Points Standings.csv"
+            matching_file_with_path = download_path + "/" + matching_file
+            # print(matching_file_with_path)
+            os.rename(matching_file_with_path, correct)
+
     # Define the file paths
     input_csv_file = f"NASCAR/downloads/{year} NASCAR Cup Series Driver Points Standings.csv"
     output_csv_file = f"NASCAR/downloads/{year} NASCAR Cup Series Driver Points Standings_modified.csv"
@@ -199,6 +212,19 @@ def getstandings_custom():
         except Exception as e:
             print(f"Error: {e}")
     driver.quit()
+
+    files = os.listdir(download_path)
+
+    # Search for a file that contains the year
+    matching_files = [file for file in files if year in file]
+
+    if matching_files:
+        for matching_file in matching_files:
+            correct = download_path + "/" + f"{year} NASCAR Cup Series Driver Points Standings.csv"
+            matching_file_with_path = download_path + "/" + matching_file
+            # print(matching_file_with_path)
+            os.rename(matching_file_with_path, correct)
+
     input_csv_file = f"NASCAR/downloads/{year} NASCAR Cup Series Driver Points Standings.csv"
     output_csv_file = f"NASCAR/downloads/{year} NASCAR Cup Series Driver Points Standings_modified.csv"
 
