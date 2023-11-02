@@ -66,7 +66,6 @@ def get_info_driver_manufacturer():
 
 
 def add_competitor():
-    global MAX_POINTS
     MAX_POINTS_data = sql_client.fetch_all(
         "SELECT DISTINCT Points FROM standings WHERE `Points` = (SELECT MAX(`Points`) FROM standings);")
     if MAX_POINTS_data:

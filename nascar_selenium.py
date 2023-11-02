@@ -1,12 +1,17 @@
 import datetime
+import os
+import sys
+import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.options import Options
-from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-import os
+from selenium.webdriver.support.ui import WebDriverWait
 from fillinfo import *
 
+def restart_program():
+    python = sys.executable
+    os.execl(python, python, *sys.argv)
 
 def getstandings_curent():
     today = datetime.date.today()
@@ -147,6 +152,9 @@ def getstandings_curent():
                 sql_client.insert(keys, values, table_name)
 
     print("Data Has been updated.")
+    print("app will restart in 5 seconds")
+    time.sleep(5)
+    restart_program()
 
 
 def getstandings_custom():
@@ -283,3 +291,6 @@ def getstandings_custom():
                 sql_client.insert(keys, values, table_name)
 
     print("Data Has been updated.")
+    print("app will restart in 5 seconds")
+    time.sleep(5)
+    restart_program()

@@ -4,13 +4,6 @@ from getinfo import *
 
 restart = "N"
 
-
-def restart_program():
-    python = sys.executable
-    os.execl(python, python, *sys.argv)
-
-
-
 def delete():
     delete_stand()
 
