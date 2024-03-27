@@ -13,3 +13,5 @@ if you meet all the requirements the procedure is the following
 5. and run the python script.
 
 Now you have the script running the rest of the script explains itself
+
+This software is distributed under the terms of the [Pascal Benink Proprietary License](LICENSE.md).
